@@ -8,9 +8,9 @@
 U8G2_SSD1306_128X32_UNIVISION_F_HW_I2C u8g2(U8G2_R0); 
 
 // constants (can change when running code)
-volatile byte state = 0;
+volatile byte state = 0; 
 unsigned long previousMillis = 0UL;
-unsigned long interval = 120000UL;
+unsigned long interval = 120000UL; // this is how long it will brush for in milliseconds
 
 
 // Speaker pin
@@ -26,7 +26,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (state == 0){
+  if (state == 0){ //main state for nothing happening
     u8g2.clearBuffer();                      // clear the internal memory
     u8g2.setFont(u8g2_font_logisoso28_tr);   // choose a suitable font at https://github.com/olikraus/u8g2/wiki/fntlistall
     u8g2.drawStr(20,29,"Brush?");            // write something to the internal memory
@@ -45,8 +45,8 @@ void loop() {
     }
   }
 
-  if (state == 1){
-    u8g2.clearBuffer();
+  if (state == 1){ //state for brushing sequence
+    u8g2.clearBuffer();                      // clear the internal memory
     u8g2.setFont(u8g2_font_logisoso28_tr);
     u8g2.drawStr(0,29,"brushing");           // write something to the internal memory
     u8g2.sendBuffer();                       // transfer internal memory to the display
@@ -57,7 +57,7 @@ void loop() {
       state = 0;
       Serial.println("state0");
     }
-    unsigned long currentMillis = millis();
+    unsigned long currentMillis = millis(); // millis function used to time a specfic state so after a desired time the state can change
 
     if(currentMillis - previousMillis > interval)
     {
@@ -70,8 +70,8 @@ void loop() {
 
   }
 
-  if (state == 2){
-    u8g2.clearBuffer();
+  if (state == 2){ // state to display "battery life"
+    u8g2.clearBuffer();                      
     u8g2.setFont(u8g2_font_logisoso28_tr);
     u8g2.drawStr(0,29,"100%");           // write something to the internal memory
     u8g2.sendBuffer();                       // transfer internal memory to the display
@@ -92,7 +92,7 @@ void loop() {
     }
   }
 
-  if (state == 3){
+  if (state == 3){ // state to display brush time duration
     u8g2.clearBuffer();
     u8g2.setFont(u8g2_font_logisoso28_tr);
     u8g2.drawStr(0,29,"2 MIN");           // write something to the internal memory
@@ -113,7 +113,8 @@ void loop() {
     }
   }
 
-  if (state == 4){ u8g2.clearBuffer();
+  if (state == 4){ // state to say thanks after completing desired brush sequence time
+    u8g2.clearBuffer(); 
     u8g2.setFont(u8g2_font_logisoso28_tr);
     u8g2.drawStr(0,29,"Thanks");           // write something to the internal memory
     u8g2.sendBuffer();                       // transfer internal memory to the display
@@ -122,7 +123,7 @@ void loop() {
     state = 0;
   }
 
-  if (state == 5){
+  if (state == 5){ // brushing state to play speaker tone.
     u8g2.clearBuffer();
     u8g2.setFont(u8g2_font_logisoso28_tr);
     u8g2.drawStr(0,29,"brushing");           // write something to the internal memory
@@ -135,7 +136,7 @@ void loop() {
   
   }
 
-  if (state == 6){
+  if (state == 6){ // state made for playing speaker tone and displaying thank you.
     u8g2.clearBuffer();
     u8g2.setFont(u8g2_font_logisoso28_tr);
     u8g2.drawStr(0,29,"Thanks");           // write something to the internal memory
